@@ -33,6 +33,7 @@ def _load_metadata(metadata_path: str):
                 continue
     return records
 
+
 def main() -> None:
     st.set_page_config(page_title="Book Search", page_icon="📚", layout="wide")
     st.title("Book Search")
@@ -97,10 +98,15 @@ def main() -> None:
             authors = hit.get("authors", "")
             year = hit.get("year", 0)
             score = hit.score
+            title_snippet = hit.highlights("title") or title
+            authors_snippet = hit.highlights("authors") or authors
             snippet = hit.highlights("text") or hit.get("text", "")[:300]
 
-            st.markdown(f"**{title}** ({year})")
-            st.caption(f"{authors} · score {score:.4f}")
+            st.markdown(f"**{title_snippet}** ({year})", unsafe_allow_html=True)
+            st.markdown(
+                f"<span class='authors'>{authors_snippet} · score {score:.4f}</span>",
+                unsafe_allow_html=True,
+            )
             st.markdown(snippet, unsafe_allow_html=True)
             st.divider()
 

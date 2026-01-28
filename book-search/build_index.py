@@ -82,6 +82,18 @@ def _normalize_text(text: str) -> str:
     return text.strip()
 
 
+def _normalize_author_name(name: str) -> str:
+    """Normalize author name variants for better matching."""
+    name = re.sub(r"\s+", " ", name.strip())
+    if "," in name:
+        parts = [p.strip() for p in name.split(",") if p.strip()]
+        if len(parts) >= 2:
+            last = parts[0]
+            rest = " ".join(parts[1:])
+            name = f"{rest} {last}".strip()
+    return name
+
+
 def _index_batch(writer, docs: List[Dict]) -> None:
     """Add a batch of documents to a Whoosh writer."""
     for doc in docs:
@@ -107,7 +119,8 @@ def build_index(index_dir: str, data_dir: str, bulk_size: int) -> None:
             text = _strip_gutenberg_boilerplate(f.read())
 
         authors = record.get("authors") or []
-        authors_text = ", ".join([a for a in authors if a])
+        normalized_authors = [_normalize_author_name(a) for a in authors if a]
+        authors_text = ", ".join(normalized_authors)
         year = record.get("year") or 0
 
         doc = {
