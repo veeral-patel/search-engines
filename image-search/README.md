@@ -56,6 +56,21 @@ python query_text.py "a snowy mountain landscape" --top-k 5
 streamlit run app.py
 ```
 
+## Pipeline diagram
+
+```mermaid
+flowchart LR
+  A[Download images] --> B[data/images]
+  B --> C[Embed with OpenCLIP]
+  C --> D[DuckDB embeddings]
+  Q1[Text query] --> E[Text encoder]
+  Q2[Image query] --> F[Image encoder]
+  E --> G[Vector search]
+  F --> G
+  D --> G
+  G --> R[Top‑K results]
+```
+
 ## Notes
 
 - Embeddings are stored as `FLOAT[]` in DuckDB.

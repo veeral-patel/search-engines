@@ -42,6 +42,17 @@ streamlit run app.py
 
 ## How it works
 
+### Pipeline diagram
+
+```mermaid
+flowchart LR
+  A[Download Gutenberg<br/>books] --> B[data/books + metadata.jsonl]
+  B --> C[Normalize + Index<br/>Whoosh BM25F]
+  Q[Query] --> D[Search fields<br/>title/authors/text]
+  C --> D
+  D --> R[Ranked results]
+```
+
 ### 1) Data download
 - `download_books.py` fetches Project Gutenberg texts and writes them to `data/books/`.
 - It also writes `data/metadata.jsonl`, where each line is a JSON object containing:
