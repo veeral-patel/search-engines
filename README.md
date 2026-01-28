@@ -1,4 +1,4 @@
-# search-engines
+# Search Engines
 
 A collection of small, focused search engine demos.
 
@@ -35,3 +35,13 @@ Each project is standalone. Create a virtualenv and follow its README:
 - `support-ticket-search/README.md`
 - `book-search/README.md`
 - `image-search/README.md`
+
+## Run all Streamlit apps (different ports)
+
+Run these three commands (one per terminal):
+
+```bash
+cd support-ticket-search && streamlit run app.py --server.port 8501
+cd book-search && streamlit run app.py --server.port 8502
+cd image-search && streamlit run app.py --server.port 8503
+```
