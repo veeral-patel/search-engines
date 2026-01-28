@@ -8,9 +8,9 @@ import json
 import subprocess
 
 import streamlit as st
-from whoosh import index, scoring
+from whoosh import index
 from whoosh.highlight import HtmlFormatter
-from whoosh.qparser import MultifieldParser
+from search_utils import build_parser, build_searcher
 
 
 def _open_index(index_dir: str):
@@ -85,11 +85,10 @@ def main() -> None:
         st.error(f"Index not found in: {index_dir}")
         return
 
-    field_boosts = {"title": 3.0, "authors": 2.0, "text": 1.0}
-    parser = MultifieldParser(["title", "authors", "text"], schema=ix.schema, fieldboosts=field_boosts)
+    parser = build_parser(ix)
     query = parser.parse(query_text)
 
-    with ix.searcher(weighting=scoring.BM25F(field_boosts=field_boosts)) as searcher:
+    with build_searcher(ix) as searcher:
         results = searcher.search(query, limit=int(limit))
         results.formatter = HtmlFormatter(tagname="mark", classname="match")
         st.write(f"Found {len(results)} results")

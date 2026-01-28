@@ -6,8 +6,9 @@ from __future__ import annotations
 import argparse
 import os
 
-from whoosh import index, scoring
-from whoosh.qparser import MultifieldParser
+from whoosh import index
+
+from search_utils import build_parser, build_searcher
 
 
 def search_index(index_dir: str, query_text: str, limit: int) -> None:
@@ -16,11 +17,10 @@ def search_index(index_dir: str, query_text: str, limit: int) -> None:
         raise FileNotFoundError(f"Index not found in: {index_dir}")
 
     ix = index.open_dir(index_dir)
-    field_boosts = {"title": 3.0, "authors": 2.0, "text": 1.0}
-    parser = MultifieldParser(["title", "authors", "text"], schema=ix.schema, fieldboosts=field_boosts)
+    parser = build_parser(ix)
     query = parser.parse(query_text)
 
-    with ix.searcher(weighting=scoring.BM25F(field_boosts=field_boosts)) as searcher:
+    with build_searcher(ix) as searcher:
         results = searcher.search(query, limit=limit)
         results.fragmenter.charlimit = 300
         results.formatter.maxchars = 300
