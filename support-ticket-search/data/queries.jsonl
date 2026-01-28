@@ -1,0 +1,4 @@
+{"query":"rotate s3 access key in prod","relevant":["KB-101","TCK-001"]}
+{"query":"dashboard render timeout","relevant":["KB-102","TCK-002"]}
+{"query":"oauth token refresh 401","relevant":["KB-103","TCK-004"]}
+{"query":"smtp queue backlog","relevant":["KB-104","TCK-003"]}

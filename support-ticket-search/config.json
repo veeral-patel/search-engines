@@ -1,0 +1,7 @@
+{
+  "embedder": "hashing",
+  "embedding_dim": 384,
+  "whoosh_index_dir": "whoosh_index",
+  "duckdb_path": "vectors.duckdb",
+  "corpus_path": "data/corpus.jsonl"
+}

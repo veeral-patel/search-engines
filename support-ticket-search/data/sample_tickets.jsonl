@@ -1,0 +1,4 @@
+{"doc_id":"TCK-001","title":"S3 access key rotation for prod","body":"Customer reports failure after rotating S3 access key. Need steps to update IAM credentials in prod and restart the sync worker.","source":"ticket","created_at":"2025-12-05","tags":["s3","iam","prod"]}
+{"doc_id":"TCK-002","title":"App freezes when opening dashboard","body":"UI hangs on dashboard load after v3.2.1. Logs show 'render timeout' and high CPU in renderer.","source":"ticket","created_at":"2025-12-09","tags":["ui","performance"]}
+{"doc_id":"TCK-003","title":"Email delivery delayed","body":"SMTP queue backed up. Investigate rate limits and retry settings.","source":"ticket","created_at":"2025-12-12","tags":["email","smtp"]}
+{"doc_id":"TCK-004","title":"OAuth token refresh failing","body":"Token refresh returns 401 after rotating client secret. Need to update secret in service and restart auth worker.","source":"ticket","created_at":"2025-12-15","tags":["oauth","auth"]}
