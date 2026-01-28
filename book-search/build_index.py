@@ -10,6 +10,7 @@ import re
 from typing import Dict, Iterable, List, Optional
 
 from whoosh import index
+from whoosh.analysis import LowercaseFilter, RegexTokenizer, StemFilter, StopFilter
 from whoosh.fields import ID, NUMERIC, TEXT, Schema
 
 
@@ -19,12 +20,13 @@ def _ensure_index(index_dir: str) -> None:
         os.makedirs(index_dir, exist_ok=True)
     if index.exists_in(index_dir):
         return
+    analyzer = RegexTokenizer() | LowercaseFilter() | StopFilter() | StemFilter()
     schema = Schema(
         id=ID(stored=True, unique=True),
         title=TEXT(stored=True),
         authors=TEXT(stored=True),
         year=NUMERIC(stored=True),
-        text=TEXT(stored=True),
+        text=TEXT(stored=True, analyzer=analyzer),
     )
     index.create_in(index_dir, schema)
 
@@ -66,7 +68,17 @@ def _strip_gutenberg_boilerplate(text: str) -> str:
             break
 
     if start_idx is not None and end_idx is not None and start_idx < end_idx:
-        return "\n".join(lines[start_idx:end_idx]).strip()
+        text = "\n".join(lines[start_idx:end_idx])
+    return _normalize_text(text)
+
+
+def _normalize_text(text: str) -> str:
+    """Normalize Gutenberg text for better tokenization."""
+    text = text.replace("\r\n", "\n")
+    text = re.sub(r"(\w+)-\n(\w+)", r"\1\2", text)
+    text = re.sub(r"(?<!\n)\n(?!\n)", " ", text)
+    text = re.sub(r"[ \t]+", " ", text)
+    text = re.sub(r"\n{3,}", "\n\n", text)
     return text.strip()
 
 
