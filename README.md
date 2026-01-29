@@ -9,6 +9,7 @@ Hybrid search for support tickets and KB docs.
 - BM25 (Whoosh) + vector search (DuckDB vss)
 - Optional cross‑encoder reranking
 - CLI + Streamlit UI
+![Support Ticket Search screenshot](img/screenshots/support-ticket-search.png)
 
 See: `support-ticket-search/README.md`
 
@@ -17,6 +18,7 @@ Keyword search over public‑domain books using Whoosh.
 - Data download + normalization pipeline
 - BM25F scoring with field boosts
 - CLI + Streamlit UI
+![Book Search screenshot](img/screenshots/book-search.png)
 
 See: `book-search/README.md`
 
@@ -25,6 +27,7 @@ Image and text search over a small image set.
 - OpenCLIP embeddings stored in DuckDB
 - Query by text or image
 - CLI + Streamlit UI
+![Image Search screenshot](img/screenshots/image-search.png)
 
 See: `image-search/README.md`
 
