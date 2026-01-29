@@ -1,19 +1,10 @@
 # Search Engines
 
-A collection of small, focused search engine demos.
+This repository implements 3 different types of search systems: traditional full-text search, vector search and hybrid search.
 
 ## Projects
 
-### 1) Support Ticket Search
-Hybrid search for support tickets and KB docs.
-- BM25 (Whoosh) + vector search (DuckDB vss)
-- Optional cross‑encoder reranking
-- CLI + Streamlit UI
-![Support Ticket Search screenshot](img/screenshots/support-ticket-search.png)
-
-See: `support-ticket-search/README.md`
-
-### 2) Book Search (Project Gutenberg)
+### 1) Book Search (Project Gutenberg) - Lexical/Text Search
 Keyword search over public‑domain books using Whoosh.
 - Data download + normalization pipeline
 - BM25F scoring with field boosts
@@ -22,7 +13,7 @@ Keyword search over public‑domain books using Whoosh.
 
 See: `book-search/README.md`
 
-### 3) Image Search (OpenCLIP + DuckDB)
+### 2) Image Search (OpenCLIP + DuckDB) - Vector Search
 Image and text search over a small image set.
 - OpenCLIP embeddings stored in DuckDB
 - Query by text or image
@@ -31,13 +22,22 @@ Image and text search over a small image set.
 
 See: `image-search/README.md`
 
+### 3) Support Ticket Search - Hybrid Search with Reranking
+Hybrid search for support tickets and KB docs.
+- BM25 (Whoosh) + vector search (DuckDB vss)
+- Optional cross‑encoder reranking
+- CLI + Streamlit UI
+![Support Ticket Search screenshot](img/screenshots/support-ticket-search.png)
+
+See: `support-ticket-search/README.md`
+
 ## Quickstart
 
 Each project is standalone. Create a virtualenv and follow its README:
 
-- `support-ticket-search/README.md`
 - `book-search/README.md`
 - `image-search/README.md`
+- `support-ticket-search/README.md`
 
 ## Run all Streamlit apps (different ports)
 
